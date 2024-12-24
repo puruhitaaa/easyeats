@@ -30,13 +30,22 @@ class IngredientResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->nullable()
                     ->maxLength(65535),
-            ]);
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('ingredients')
+                    ->label('Upload Image'),
+                ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Image')
+                    ->square()
+                    ->size(40),
                 Tables\Columns\TextColumn::make('name')
                 ->searchable()
                 ->sortable(),

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RestaurantResource\Pages;
-use App\Filament\Resources\RestaurantResource\RelationManagers;
 use App\Models\Restaurant;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -38,6 +37,11 @@ class RestaurantResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->maxLength(65535),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('restaurants')
+                    ->label('Upload Image'),
             ]);
     }
 
@@ -45,6 +49,10 @@ class RestaurantResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Image')
+                    ->square()
+                    ->size(40),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),

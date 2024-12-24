@@ -6,9 +6,11 @@ use App\Filament\Resources\RecipeResource\Pages;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 
 class RecipeResource extends Resource
@@ -36,6 +38,11 @@ class RecipeResource extends Resource
                 Forms\Components\TextInput::make('servings')
                     ->required()
                     ->numeric(),
+                FileUpload::make('image')
+                ->image()
+                ->disk('public')
+                ->directory('recipes')
+                ->label('Upload Image'),
                 Forms\Components\Section::make('Ingredients')
                 ->schema([
                     Forms\Components\Repeater::make('recipe_ingredients')
@@ -66,6 +73,10 @@ class RecipeResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                ->label('Image')
+                ->circular()
+                ->size(40),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
