@@ -17,6 +17,7 @@ class Recipe extends Model
         'cooking_time',
         'servings',
         'user_id',
+        'image',
     ];
 
     // Relationships

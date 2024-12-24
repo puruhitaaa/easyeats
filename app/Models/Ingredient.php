@@ -13,7 +13,8 @@ class Ingredient extends Model
     protected $fillable = [
         'name',
         'unit',
-        'description'
+        'description',
+        'image'
     ];
 
     // Relationships

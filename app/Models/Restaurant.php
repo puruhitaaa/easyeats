@@ -15,7 +15,8 @@ class Restaurant extends Model
         'address',
         'phone',
         'email',
-        'description'
+        'description',
+        'image'
     ];
 
     // Relationships
