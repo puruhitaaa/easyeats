@@ -22,9 +22,12 @@
                     <div class="overflow-hidden border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
                         <div class="p-6">
                             <div class="relative w-full h-48 overflow-hidden bg-center bg-cover">
-                                <img class="object-cover w-full h-full transition-transform ease-out group-hover:scale-105" src="{{ asset('storage/' . $restaurant->image) }}" />
+                                <img class="object-cover w-full h-full transition-transform ease-out group-hover:scale-105"
+                                    src="{{ $restaurant->image ? asset('storage/' . $restaurant->image) : 'https://ui-avatars.com/api/?name=' . urlencode($restaurant->name) }}"
+                                    alt="{{ $restaurant->name }}"
+                                    />
                             </div>
-                            <h3 class="mt-2 text-xl font-semibold text-text-light dark:text-text-dark">{{ $restaurant->name }}</h3>
+                            <h3 class="mt-4 text-xl font-semibold text-text-light dark:text-text-dark">{{ $restaurant->name }}</h3>
                             <p class="mt-2 text-gray-600 dark:text-gray-400">{{ Str::limit($restaurant->description, 150) }}</p>
                             <div class="mt-4">
                                 <span class="text-sm text-gray-500 dark:text-gray-400">

@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipes', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->text('instructions');
-            $table->string('cooking_time');
-            $table->integer('servings');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->text('content');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipes');
+        Schema::dropIfExists('comments');
     }
 };

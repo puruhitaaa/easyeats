@@ -61,6 +61,24 @@ php artisan make:filament-user
 php artisan db:seed --class=AssignAdminRoleSeeder
 ```
 
+10. Seed the database with sample data
+
+```bash
+php artisan db:seed
+```
+
+11. Run the development server
+
+```bash
+composer run dev
+```
+
+## (Optional)
+
+12. Modify the images needed for each resource in the database by:
+    -   Navigate the browser url to `http://localhost:8000/admin` and log in using the created filament admin user
+    -   Each resource will be displayed on the sidebar, click on each resource to access the respective table and add/edit the image field
+
 ## Usage
 
 For available routes and endpoints, please refer to `routes/web.php`.

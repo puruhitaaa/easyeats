@@ -59,4 +59,44 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        /**
+     * Get all posts created by the user.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
+
+    /**
+     * Get all comments created by the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get all likes created by the user.
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Check if user has liked a specific likeable model (post or comment).
+     */
+    public function hasLiked($likeable): bool
+    {
+        return $this->likes()
+            ->where('likeable_type', get_class($likeable))
+            ->where('likeable_id', $likeable->id)
+            ->exists();
+    }
 }

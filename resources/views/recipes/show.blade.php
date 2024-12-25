@@ -6,7 +6,9 @@
         <div class="overflow-hidden border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
             <div class="p-8">
                 <div class="w-full h-96 relative">
-                    <img class="w-full h-full object-cover" src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->name }}" />
+                    <img class="w-full h-full object-cover"
+                        src="{{ $recipe->image ? asset('storage/' . $recipe->image) : 'https://ui-avatars.com/api/?name=' . urlencode($recipe->name) }}"
+                        alt="{{ $recipe->name }}" />
                 </div>
 
                 <h1 class="text-3xl mt-6 font-bold text-text-light dark:text-text-dark">{{ $recipe->name }}</h1>
