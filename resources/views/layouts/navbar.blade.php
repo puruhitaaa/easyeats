@@ -12,6 +12,7 @@
                         <a href="{{ route('recipes.index') }}" class="px-3 py-2 text-sm font-medium rounded-md cursor-pointer text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Recipes</a>
                         <a href="{{ route('ingredients.index') }}" class="px-3 py-2 text-sm font-medium rounded-md cursor-pointer text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Ingredients</a>
                         <a href="{{ route('restaurants.index') }}" class="px-3 py-2 text-sm font-medium rounded-md cursor-pointer text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Restaurants</a>
+                        <a href="{{ route('posts.index') }}" class="px-3 py-2 text-sm font-medium rounded-md cursor-pointer text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Posts</a>
                     </div>
                 </div>
             </div>
@@ -23,7 +24,7 @@
                                 <button type="button" @click="isOpen = !isOpen"
                                 @click.outside="isOpen = false" class="flex items-center max-w-xs text-sm rounded-full bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-dark" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="w-8 h-8 rounded-full object-cover" src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+                                    <img class="w-8 h-8 rounded-full object-cover" src="{{ Auth::user()->image ? url('storage/' . Auth::user()->image) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}" alt="{{ Auth::user()->name }}">
                                 </button>
                             </div>
                             <div x-show="isOpen"
@@ -71,15 +72,16 @@
 
     <div class="md:hidden" id="mobile-menu" x-show="isMenuOpen" x-transition>
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Recipes</a>
-            <a class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Ingredients</a>
-            <a class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Restaurants</a>
+            <a href="{{ route('recipes.index') }}" class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Recipes</a>
+            <a href="{{ route('ingredients.index') }}" class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Ingredients</a>
+            <a href="{{ route('restaurants.index') }}" class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Restaurants</a>
+            <a href="{{ route('posts.index') }}" class="block px-3 py-2 text-base font-medium rounded-md text-text-light dark:text-text-dark hover:bg-primary hover:text-white dark:hover:bg-primary-dark">Posts</a>
         </div>
         @auth
             <div class="pt-4 pb-3 border-t border-gray-700">
                 <div class="flex items-center px-5">
                     <div class="flex-shrink-0">
-                        <img class="w-10 h-10 rounded-full object-cover" src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+                        <img class="w-10 h-10 rounded-full object-cover" src="{{ Auth::user()->image ? url('storage/' . Auth::user()->image) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}" alt="{{ Auth::user()->name }}">
                     </div>
                     <div class="ml-3">
                         <div class="text-base font-medium leading-none text-text-light dark:text-text-dark">{{ Auth::user()->name }}</div>
