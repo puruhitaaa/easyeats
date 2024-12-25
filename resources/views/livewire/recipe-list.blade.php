@@ -20,42 +20,48 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            @foreach($this->recipes as $recipe)
-                <div class="overflow-hidden border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
-                    <div class="p-6">
-                        <div class="relative w-full h-48 overflow-hidden bg-center bg-cover">
-                            <img class="object-cover w-full h-full transition-transform ease-out group-hover:scale-105" src="{{ asset('storage/' . $recipe->image) }}" />
-                        </div>
-                        <h3 class="mt-2 text-xl font-semibold text-text-light dark:text-text-dark">{{ $recipe->name }}</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ Str::limit($recipe->description, 150) }}</p>
-                        <div class="mt-4">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">
-                                Cooking time: {{ $recipe->cooking_time }}
-                            </span>
-                        </div>
-                        <div class="mt-4">
-                            <a href="{{ route('recipes.show', $recipe) }}" class="inline-flex items-center text-primary hover:text-primary-dark dark:hover:text-primary-light">
-                                View Recipe
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </a>
+        @if($this->recipes->count() > 0)
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach($this->recipes as $recipe)
+                    <div class="overflow-hidden border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="relative w-full h-48 overflow-hidden bg-center bg-cover">
+                                <img class="object-cover w-full h-full transition-transform ease-out group-hover:scale-105" src="{{ asset('storage/' . $recipe->image) }}" />
+                            </div>
+                            <h3 class="mt-2 text-xl font-semibold text-text-light dark:text-text-dark">{{ $recipe->name }}</h3>
+                            <p class="mt-2 text-gray-600 dark:text-gray-400">{{ Str::limit($recipe->description, 150) }}</p>
+                            <div class="mt-4">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">
+                                    Cooking time: {{ $recipe->cooking_time }}
+                                </span>
+                            </div>
+                            <div class="mt-4">
+                                <a href="{{ route('recipes.show', $recipe) }}" class="inline-flex items-center text-primary hover:text-primary-dark dark:hover:text-primary-light">
+                                    View Recipe
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
-
-        @if($this->recipes->hasMorePages())
-            <div class="mt-8 text-center">
-                <button
-                    wire:click="loadMore"
-                    class="px-4 py-2 text-white transition-colors duration-200 ease-in-out rounded-md bg-primary hover:bg-primary-light dark:hover:bg-primary-dark"
-                >
-                    Load More
-                </button>
+                @endforeach
             </div>
+
+            @if($this->recipes->hasMorePages())
+                <div class="mt-8 text-center">
+                    <button
+                        wire:click="loadMore"
+                        class="px-4 py-2 text-white transition-colors duration-200 ease-in-out rounded-md bg-primary hover:bg-primary-light dark:hover:bg-primary-dark"
+                    >
+                        Load More
+                    </button>
+                </div>
+            @endif
+        @else
+            <p class="text-center text-gray-500 dark:text-gray-400 text-lg py-8">
+                No recipes found.
+            </p>
         @endif
     </div>
 </div>
