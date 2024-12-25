@@ -9,15 +9,17 @@ use App\Http\Controllers\IngredientController;
 use App\Livewire\RecipeList;
 use App\Livewire\RestaurantList;
 use App\Livewire\IngredientList;
+use App\Livewire\Profile\Edit;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest'])->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
     Route::post('/login', [LoginController::class, 'login'])->name('auth.login.submit');
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('auth.register');
     Route::post('/register', [RegisterController::class, 'register'])->name('auth.register.submit');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', Edit::class)->name('profile.edit');
     Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 });
 
