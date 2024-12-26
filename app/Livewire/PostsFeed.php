@@ -16,6 +16,7 @@ class PostsFeed extends Component
 
     protected $listeners = [
         'postCreated' => '$refresh',
+        'postDeleted' => '$refresh',
         'commentAdded' => '$refresh'
     ];
 

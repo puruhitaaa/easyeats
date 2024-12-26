@@ -24,6 +24,12 @@ class PostCard extends Component
         $this->post->refresh();
     }
 
+    public function deletePost(int $postId)
+    {
+        Post::findOrFail($postId)->delete();
+        $this->dispatch('postDeleted');
+    }
+
     public function render()
     {
         return view('livewire.post-card');

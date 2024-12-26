@@ -29,7 +29,7 @@ class RestaurantObserver
     public function deleted(Restaurant $restaurant): void
     {
         if ($restaurant->image) {
-            Storage::disk('public')->delete('restaurants/' . $restaurant->image);
+            Storage::disk('public')->delete($restaurant->image);
         }
     }
 
