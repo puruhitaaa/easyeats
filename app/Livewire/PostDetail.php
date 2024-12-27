@@ -16,6 +16,11 @@ class PostDetail extends Component
         'commentAdded' => '$refresh'
     ];
 
+    public function mount(Post $post)
+    {
+        $this->post = $post;
+    }
+
     public function setPost($postId)
     {
         $this->post = Post::findOrFail($postId);
@@ -42,16 +47,20 @@ class PostDetail extends Component
     }
 
     public function render()
-    {
-        $comments = collect([]); // Default empty collection
-        if (!$this->post) return;
-
-        $comments = $this->post->comments()
-            ->with(['user', 'likes', 'replies.user'])
-            ->paginate($this->perPage);
-
+{
+    if (!$this->post) {
         return view('livewire.post-detail', [
-            'comments' => $comments
+            'comments' => collect([])
         ]);
     }
+
+    $comments = $this->post->comments()
+        ->whereNull('parent_id')
+        ->with(['user', 'likes'])
+        ->paginate($this->perPage);
+
+    return view('livewire.post-detail', [
+        'comments' => $comments
+    ]);
+}
 }

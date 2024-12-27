@@ -1,21 +1,5 @@
-<div>
+<div class="relative">
     <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="mb-4">
-            @auth
-                <x-button
-                    x-data
-                    @click="$dispatch('open-modal', 'create-post')"
-                    class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md"
-                >
-                    Create Post
-                </x-button>
-            @else
-                <a href="{{ route('login') }}" class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md">
-                    Create Post
-                </a>
-            @endauth
-        </div>
-
         @if($posts->isEmpty())
             <div class="py-4 text-center">
                 <p>No posts found.</p>
@@ -43,7 +27,23 @@
         </x-modal>
     </div>
 
-    {{-- <x-modal name="post-detail">
-        <livewire:post-detail />
-    </x-modal> --}}
+    <div class="fixed bottom-4 right-4">
+        @auth
+            <x-button
+                x-data
+                @click="$dispatch('open-modal', 'create-post')"
+                class="p-4 font-medium text-white bg-blue-600 rounded-md"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+            </x-button>
+        @else
+            <a href="{{ route('login') }}" class="p-4 font-medium text-white bg-blue-600 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+            </a>
+        @endauth
+    </div>
 </div>

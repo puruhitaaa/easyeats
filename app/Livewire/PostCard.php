@@ -3,15 +3,29 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Illuminate\Auth\Access\AuthorizationException;
 use Livewire\Component;
 
 class PostCard extends Component
 {
     public Post $post;
+    public $commentCount;
+
+    public function mount()
+    {
+        $this->updateCommentCount();
+    }
+
+    public function updateCommentCount()
+    {
+        $this->commentCount = $this->post->comments()
+            ->whereNull('parent_id')
+            ->count();
+    }
 
     public function like()
     {
-        if (!auth()->user()) return;
+        if (!auth()->user()) throw new AuthorizationException('Unauthorized.');
 
         $like = $this->post->likes()->where('user_id', auth()->id())->first();
 

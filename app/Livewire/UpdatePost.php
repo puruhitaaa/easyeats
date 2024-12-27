@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -32,6 +34,9 @@ class UpdatePost extends Component
 
     public function update()
     {
+        if (!Auth::check()) {
+            throw new AuthorizationException('Unauthorized.');
+        }
         $this->validate();
 
         $this->post->content = $this->content;
@@ -49,6 +54,9 @@ class UpdatePost extends Component
 
     public function deleteImage()
     {
+        if (!Auth::check()) {
+            throw new AuthorizationException('Unauthorized.');
+        }
         if ($this->post->image) {
             $this->post->image = null;
             $this->post->save();

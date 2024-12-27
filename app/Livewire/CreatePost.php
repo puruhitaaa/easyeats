@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class CreatePost extends Component
 {
@@ -21,6 +22,9 @@ class CreatePost extends Component
 
     public function save()
     {
+        if (!Auth::check()) {
+            throw new AuthorizationException('Unauthorized.');
+        }
         $this->validate();
 
         $post = Post::create([

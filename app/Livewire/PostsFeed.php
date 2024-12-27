@@ -28,8 +28,10 @@ class PostsFeed extends Component
     #[Layout('layouts.app')]
     public function render()
     {
-        $posts = Post::with(['user', 'likes', 'comments'=> function($query) {
-            $query->latest()->limit(1);
+        $posts = Post::with(['user', 'likes', 'comments' => function($query) {
+            $query->whereNull('parent_id')
+                  ->latest()
+                  ->limit(1);
         }])
         ->latest()
         ->paginate($this->perPage);

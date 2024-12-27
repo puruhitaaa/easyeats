@@ -1,4 +1,4 @@
-<div class="p-4 overflow-hidden border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
+<div class="p-4 border rounded-lg shadow-md bg-background-light dark:bg-background-dark group dark:border-gray-700">
     <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3">
             <img src="{{ $post->user->image ? asset('storage/' . $post->user->image) : 'https://ui-avatars.com/api/?name=' . urlencode($post->user->name) }}" class="object-cover w-10 h-10 rounded-full" alt="{{ $post->user->name }}">
@@ -95,13 +95,13 @@
 
         <button
             x-data
-            @click="$dispatch('open-modal', 'post-detail'); $dispatch('set-post', { id: {{ $post->id }} })"
+            @click="$dispatch('open-modal', 'post-detail-{{ $post->id }}'); $dispatch('set-post', { id: {{ $post->id }} })"
             class="flex items-center space-x-2 text-gray-500"
         >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
             </svg>
-            <span>{{ $post->comments->count() }}</span>
+            <span>{{ $commentCount }}</span>
         </button>
     </div>
 
@@ -115,11 +115,14 @@
                     @click="$dispatch('open-modal', 'post-detail'); $dispatch('set-post', { id: {{ $post->id }} })"
                     class="mt-2 text-sm text-blue-500"
                 >
-                    View all {{ $post->comments->count() }} comments
+                    View all {{ $commentCount }} comments
                 </button>
             @endif
         </div>
     @endif
+    <x-modal name="post-detail-{{ $post->id }}" max-width="7xl">
+        <livewire:post-detail :post="$post" :key="'post-detail-'.$post->id" />
+    </x-modal>
     <x-modal name="edit-post-{{ $post->id }}">
         <livewire:update-post :post="$post" :key="'edit-post-'.$post->id" />
     </x-modal>
