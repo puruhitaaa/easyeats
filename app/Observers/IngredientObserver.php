@@ -29,7 +29,7 @@ class IngredientObserver
     public function deleted(Ingredient $ingredient): void
     {
         if ($ingredient->image) {
-            Storage::disk('public')->delete('ingredients/' . $ingredient->image);
+            Storage::disk('public')->delete($ingredient->image);
         }
     }
 

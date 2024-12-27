@@ -5,7 +5,7 @@
         <div class="mb-4">
             <textarea
                 wire:model="content"
-                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200"
+                class="w-full rounded-lg border border-gray-300 bg-background-light dark:bg-background-dark shadow-sm focus:ring focus:ring-primary/20 focus:border-primary dark:focus:border-primary p-4 md:p-6 max-h-96 overflow-y-auto min-h-40"
                 rows="4"
                 placeholder="What's on your mind?"
             ></textarea>
@@ -26,8 +26,8 @@
             <x-button
                 type="button"
                 x-data
-                @click="$dispatch('close-modal', 'create-post')"
-                class="bg-gray-200"
+                @click="show = false"
+                class="bg-gray-200 text-text-light"
             >
                 Cancel
             </x-button>

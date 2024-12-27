@@ -15,20 +15,19 @@ use App\Livewire\PostsFeed;
 use App\Livewire\Profile\Edit;
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
-    Route::post('/login', [LoginController::class, 'login'])->name('auth.login.submit');
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('auth.register');
-    Route::post('/register', [RegisterController::class, 'register'])->name('auth.register.submit');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
-    Route::post('/create-post', [CreatePost::class, 'save'])->name('posts.create');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/recipes', RecipeList::class)->name('recipes.index');

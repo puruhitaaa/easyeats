@@ -3,10 +3,14 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreatePost extends Component
 {
+    use WithFileUploads;
+
     public $content = '';
     public $image;
 
@@ -21,7 +25,7 @@ class CreatePost extends Component
 
         $post = Post::create([
             'content' => $this->content,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]);
 
         if ($this->image) {

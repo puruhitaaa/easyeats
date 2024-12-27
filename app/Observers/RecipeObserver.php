@@ -29,7 +29,7 @@ class RecipeObserver
     public function deleted(Recipe $recipe): void
     {
         if ($recipe->image) {
-            Storage::disk('public')->delete('recipes/' . $recipe->image);
+            Storage::disk('public')->delete($recipe->image);
         }
     }
 
