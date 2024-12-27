@@ -11,6 +11,11 @@ class Post extends Model
 
     protected $fillable = ['content', 'user_id', 'image'];
 
+    public function topLevelComments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

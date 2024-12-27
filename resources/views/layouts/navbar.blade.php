@@ -4,7 +4,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <a class="font-semibold text-text-light dark:text-text-dark">
-                        EasyEats
+                        FreshEats
                     </a>
                 </div>
                 <div class="hidden md:block">
