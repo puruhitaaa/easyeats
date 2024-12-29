@@ -1,12 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\IngredientController;
-use App\Livewire\CreatePost;
+use App\Http\Controllers\PdfController;
+
 use App\Livewire\RecipeList;
 use App\Livewire\RestaurantList;
 use App\Livewire\IngredientList;

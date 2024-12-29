@@ -3,13 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\IngredientResource\Pages;
-use App\Filament\Resources\IngredientResource\RelationManagers;
 use App\Models\Ingredient;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Blade;
 
 class IngredientResource extends Resource
 {
@@ -58,6 +59,22 @@ class IngredientResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->color('success')
+                    ->icon('heroicon-s-arrow-down-tray')
+                    ->action(function () {
+                        $ingredients = Ingredient::orderBy('name')->get();
+
+                        return response()->streamDownload(function () use ($ingredients) {
+                            echo Pdf::loadHtml(
+                                Blade::render('ingredients.pdf', ['ingredients' => $ingredients])
+                            )->stream();
+                        }, 'ingredients.pdf');
+                    })
+                    ->openUrlInNewTab(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
