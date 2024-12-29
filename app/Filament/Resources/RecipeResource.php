@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RecipeResource\Pages;
 use App\Models\Recipe;
 use App\Models\Ingredient;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Blade;
 
 class RecipeResource extends Resource
 {
@@ -91,6 +93,24 @@ class RecipeResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->color('success')
+                    ->icon('heroicon-s-arrow-down-tray')
+                    ->action(function () {
+                        $recipes = Recipe::with(['recipe_ingredients.ingredient'])
+                            ->orderBy('name')
+                            ->get();
+
+                        return response()->streamDownload(function () use ($recipes) {
+                            echo Pdf::loadHtml(
+                                Blade::render('recipes.pdf', ['recipes' => $recipes])
+                            )->stream();
+                        }, 'recipes.pdf');
+                    })
+                    ->openUrlInNewTab(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

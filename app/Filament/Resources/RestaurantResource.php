@@ -4,11 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RestaurantResource\Pages;
 use App\Models\Restaurant;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Blade;
 
 class RestaurantResource extends Resource
 {
@@ -71,6 +73,22 @@ class RestaurantResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->color('success')
+                    ->icon('heroicon-s-arrow-down-tray')
+                    ->action(function () {
+                        $restaurants = Restaurant::orderBy('name')->get();
+
+                        return response()->streamDownload(function () use ($restaurants) {
+                            echo Pdf::loadHtml(
+                                Blade::render('restaurants.pdf', ['restaurants' => $restaurants])
+                            )->stream();
+                        }, 'restaurants.pdf');
+                    })
+                    ->openUrlInNewTab(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
